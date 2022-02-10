@@ -1,33 +1,67 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
-import { incrementCurrentValue } from './actions';
-import { selectHelloValue, selectLoading } from './selectors';
+import { Button, Divider, Stack, TextField } from "@mui/material";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
+import { incrementCurrentValue } from "./actions";
+import { selectHelloValue, selectLoading } from "./selectors";
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentTextFieldValue: undefined
-    }
+      currentTextFieldValue: undefined,
+    };
   }
-  
+
   render() {
     return (
       <>
         <nav>
-          <Link to='/' >Home</Link>
-          <Link to='/helloworld' >HelloWorld</Link>
-          <Link to='/any' >Anywhere</Link>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={3}
+            mt={3}
+            divider={<Divider orientation="vertical" flexItem />}
+          >
+            <Button variant="contained">
+              <Link to="/">Home</Link>
+            </Button>
+            <Button variant="contained">
+              <Link to="/helloworld">HelloWorld</Link>
+            </Button>
+            <Button variant="contained">
+              <Link to="/any">Anywhere</Link>
+            </Button>
+          </Stack>
         </nav>
-        
-        <h1>{this.props.helloWorldValue}</h1>
-        <input value={this.state.currentTextFieldValue} 
-          placeholder='Give value' 
-          onChange={(e) => {this.setState({currentTextFieldValue : e.target.value})}}
-        />
-        <button onClick={() => this.props.setHelloWorldValue(this.state.currentTextFieldValue)}>Increment</button>
+
+        <Stack 
+          spacing={2}
+          justifyContent="center"
+          alignItems="center"
+          mt={20}
+        >
+          <h2>{this.props.helloWorldValue}</h2>
+          <TextField
+            label="How much to increment?"
+            id="input-increment"
+            color="primary"
+            defaultValue={this.state.currentTextFieldValue}
+            size="small"
+            onChange={(e) => {
+              this.setState({ currentTextFieldValue: e.target.value });
+            }}
+          />
+          <Button 
+            variant="contained"
+            onClick={() => this.props.setHelloWorldValue(this.state.currentTextFieldValue)}
+          >
+            Increment
+          </Button>
+        </Stack>
       </>
     );
   }
@@ -35,15 +69,13 @@ class Home extends Component {
 
 const mapStateToProps = createStructuredSelector({
   loading: selectLoading(),
-  helloWorldValue: selectHelloValue()
+  helloWorldValue: selectHelloValue(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    setHelloWorldValue: (addValue) => dispatch(incrementCurrentValue(addValue))
+    setHelloWorldValue: (addValue) => dispatch(incrementCurrentValue(addValue)),
   };
 }
 
-export default connect(
-  mapStateToProps, mapDispatchToProps
-)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
