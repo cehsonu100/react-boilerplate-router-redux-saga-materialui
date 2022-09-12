@@ -1,5 +1,7 @@
 # Getting Started with React boilerplate with Redux-Saga & Material UI
 
+Wanted to start developing any Web Application, start with React-boilerplate-router-redux-saga-materialui. It is starter code using React with embedded featured and most used library - Redux with Saga, Router and Material UI.
+
 ## Available Scripts
 
 In the project directory, you can run:
